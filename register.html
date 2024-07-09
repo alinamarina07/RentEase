@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="./css/register.css">
+    <script type="module" src="./js/register.js" defer></script>
+</head>
+<body>
+    <section class="container">
+        <h1 class="registerTitle">Please register to login</h1>
+            <form class="registerForm" id="registerForm">
+                <input type="text" placeholder="First name" id="firstName">
+                <span class="error" id="firstNameError"></span>
+                <input type="text" placeholder="Last name" id="lastName">
+                <span class="error" id="lastNameError"></span>
+                <input type="email" placeholder="Email address" id="email">
+                <span class="error" id="emailError"></span>
+                <input type="date" placeholder="Date of birth" id="dateOfBirth">
+                <span class="error" id="dateOfBirthError"></span>
+                <input type="password" placeholder="Password" id="password">
+                <span class="error" id="passwordError"></span>
+                <input type="password" placeholder="Password confirmation" id="confirmPassword">
+                <span class="error" id="confirmPasswordError"></span>
+                <button class="registerBtn" id="registerBtn">Register</button>
+            </form>    
+            <p class="registerQuestion">Do you have an account?</p>
+            <br> 
+            <a class="loginLink" id="loginLink" href="login.html">Sign In</a>
+    </section>
+</body>
+</html>

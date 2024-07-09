@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <script type="module" src="./js/login.js" defer></script>
+</head>
+<body>
+    <section class="container">
+        <h1 class="loginTitle">Please login</h1>
+            <form class="loginForm" id="loginForm">
+                <input type="email" placeholder="Email address" id="email">
+                <span class="error" id="emailError"></span>
+                <input type="password" placeholder="Password" id="password">
+                <span class="error" id="passwordError"></span>
+                <button class="loginBtn" id="loginBtn">Login</button>
+            </form>    
+            <p class="loginQuestion">Don't have an account?</p>
+            <br> 
+            <a class="registerLink" id="registerLink" href="register.html">Sign Up</a>
+    </section>
+</body>
+</html>
