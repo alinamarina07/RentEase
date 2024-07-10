@@ -18,7 +18,6 @@ let arrayofusers = JSON.parse(localStorage.getItem('arrayofusers')) || [];
 
 registerBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    registerUser();
 
     let isValid = true;
 
@@ -105,6 +104,11 @@ registerBtn.addEventListener('click', (e) => {
         confirmPasswordError.textContent = 'Passwords do not match';
         isValid = false;
     };
+
+
+    if (isValid) {
+        registerUser();
+    }
 
 });
 
