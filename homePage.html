@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="./css/homePage.css">
+    <script type="module" src="./js/homePage.js" defer></script>
+</head>
+<body>
+    <form class="Filter" id="Filter"> 
+        <label for="city">City:</label>
+        <select id="city" name="city">
+          <!-- <option value="new_york">New York</option>
+          <option value="los_angeles">Los Angeles</option>
+          <option value="chicago">Chicago</option> -->
+        </select>
+  
+    <!-- Price Range Filter -->
+        <label for="price_range_min">Price Range:</label>
+        <input type="number" id="price_range_min" name="price_range_min" placeholder="Min Price">
+        <input type="number" id="price_range_max" name="price_range_max" placeholder="Max Price">
+  
+    <!-- Area Size Range Filter -->
+        <label for="area_size_range_min">Area Size Range:</label>
+        <input type="number" id="area_size_range_min" name="area_size_range_min" placeholder="Min Area Size (sq ft)">
+        <input type="number" id="area_size_range_max" name="area_size_range_max" placeholder="Max Area Size (sq ft)">
+
+        <button type="submit">Search</button>
+    </form>
+
+    <form class="sort" id="sort">
+    <!-- Sort Options -->
+        <label for="sort_by">Sort by:</label>
+        <select id="sort_by" name="sort_by">
+           <option value="city_asc">City (A-Z)</option>
+           <option value="city_desc">City (Z-A)</option>
+           <option value="price_asc">Price (Low to High)</option>
+           <option value="price_desc">Price (High to Low)</option>
+           <option value="area_size_asc">Area Size (Small to Large)</option>
+           <option value="area_size_desc">Area Size (Large to Small)</option>
+        </select>
+    
+        <button type="submit">Search</button>
+  </form>
+
+
+<table class="homeTable" id="homeTable">
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Street name</th>
+        <th>Street number</th>
+        <th>Area size</th>
+        <th>Has AC</th>
+        <th>Year built</th>
+        <th>Rent price</th>
+        <th>Date available</th>
+        <th>Remove</th>
+    </tr>
+
+</table>
+
+</body>
+</html>

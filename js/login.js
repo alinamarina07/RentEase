@@ -11,6 +11,7 @@ let arrayofusers = JSON.parse(localStorage.getItem('arrayofusers')) || [];
 loginBtn.addEventListener('click', (e) => {
     e.preventDefault();
     loginUser();
+
 });
 
 
@@ -27,3 +28,4 @@ function loginUser() {
         alert('Invalid email or password');
     }
 }
+
