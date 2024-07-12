@@ -1,18 +1,18 @@
-registerForm = document.getElementById('registerForm');
-firstName = document.getElementById('firstName');
-firstNameError = document.getElementById('firstNameError');
-lastName = document.getElementById('lastName');
-lastNameError = document.getElementById('lastNameError');
-email = document.getElementById('email');
-emailError = document.getElementById('emailError');
-dateOfBirth = document.getElementById('dateOfBirth');
-dateOfBirthError = document.getElementById('dateOfBirthError');
-password = document.getElementById('password');
-passwordError = document.getElementById('passwordError');
-confirmPassword = document.getElementById('confirmPassword');
-confirmPasswordError = document.getElementById('confirmPasswordError');
-registerBtn = document.getElementById('registerBtn');
-loginLink = document.getElementById('loginLink');
+const registerForm = document.getElementById('registerForm');
+const firstName = document.getElementById('firstName');
+const firstNameError = document.getElementById('firstNameError');
+const lastName = document.getElementById('lastName');
+const lastNameError = document.getElementById('lastNameError');
+const email = document.getElementById('email');
+const emailError = document.getElementById('emailError');
+const dateOfBirth = document.getElementById('dateOfBirth');
+const dateOfBirthError = document.getElementById('dateOfBirthError');
+const password = document.getElementById('password');
+const passwordError = document.getElementById('passwordError');
+const confirmPassword = document.getElementById('confirmPassword');
+const confirmPasswordError = document.getElementById('confirmPasswordError');
+const registerBtn = document.getElementById('registerBtn');
+const loginLink = document.getElementById('loginLink');
 
 let arrayofusers = JSON.parse(localStorage.getItem('arrayofusers')) || [];
 

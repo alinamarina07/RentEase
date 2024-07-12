@@ -1,10 +1,10 @@
-loginForm = document.getElementById('loginForm');
-email = document.getElementById('email');
-emailError = document.getElementById('emailError');
-password = document.getElementById('password');
-passwordError = document.getElementById('passwordError');
-loginBtn = document.getElementById('loginBtn');
-registerLink = document.getElementById('registerLink');
+const loginForm = document.getElementById('loginForm');
+const email = document.getElementById('email');
+const emailError = document.getElementById('emailError');
+const password = document.getElementById('password');
+const passwordError = document.getElementById('passwordError');
+const loginBtn = document.getElementById('loginBtn');
+const registerLink = document.getElementById('registerLink');
 
 let arrayofusers = JSON.parse(localStorage.getItem('arrayofusers')) || [];
 
