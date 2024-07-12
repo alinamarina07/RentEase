@@ -8,31 +8,40 @@
     <script type="module" src="./js/homePage.js" defer></script>
 </head>
 <body>
-    <form class="Filter" id="Filter"> 
-        <label for="city">City:</label>
+    <header class="header">
+        <img src="./images/Screenshot 2024-07-12 063647.png" class="logo"></img>
+        <h1 class="welcome" id="welcome"></h1>
+        <div class="menu">
+            <a href="homePage.html">Home</a>
+            <a href="allFlats.html">All Flats</a>
+            <a href="newFlat.html">New Flat</a>
+            <a href="profileUpdate.html">Profile</a>
+        </div>
+        <button class="logOutBtn" id="logOutBtn">Log Out</button>
+    </header>
+
+    <form class="filter" id="filter"> 
+        <label for="city">Filter by City:</label>
         <select id="city" name="city">
           <!-- <option value="new_york">New York</option>
           <option value="los_angeles">Los Angeles</option>
           <option value="chicago">Chicago</option> -->
         </select>
   
-    <!-- Price Range Filter -->
-        <label for="price_range_min">Price Range:</label>
-        <input type="number" id="price_range_min" name="price_range_min" placeholder="Min Price">
-        <input type="number" id="price_range_max" name="price_range_max" placeholder="Max Price">
+        <label for="price_range_min">Filter by Price Range:</label>
+        <input type="number" id="priceRangeMin" name="price_range_min" placeholder="Min Price">
+        <input type="number" id="priceRangeMax" name="price_range_max" placeholder="Max Price">
   
-    <!-- Area Size Range Filter -->
-        <label for="area_size_range_min">Area Size Range:</label>
-        <input type="number" id="area_size_range_min" name="area_size_range_min" placeholder="Min Area Size (sq ft)">
-        <input type="number" id="area_size_range_max" name="area_size_range_max" placeholder="Max Area Size (sq ft)">
+        <label for="area_size_range_min">Filter by Area Size Range:</label>
+        <input type="number" id="areaSizeRangeMin" name="area_size_range_min" placeholder="Min Area Size">
+        <input type="number" id="areaSizeRangeMax" name="area_size_range_max" placeholder="Max Area Size">
 
-        <button type="submit">Search</button>
+        <button type="submit" id="filterBtn">Search</button>
     </form>
 
     <form class="sort" id="sort">
-    <!-- Sort Options -->
         <label for="sort_by">Sort by:</label>
-        <select id="sort_by" name="sort_by">
+        <select id="sortBy" name="sort_by">
            <option value="city_asc">City (A-Z)</option>
            <option value="city_desc">City (Z-A)</option>
            <option value="price_asc">Price (Low to High)</option>
@@ -58,7 +67,6 @@
         <th>Date available</th>
         <th>Remove</th>
     </tr>
-
 </table>
 
 </body>
