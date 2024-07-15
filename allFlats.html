@@ -4,8 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All flats</title>
+    <link rel="stylesheet" href="./css/allFlats.css">
+    <script type="module" src="./js/allFlats.js" defer></script>
 </head>
 <body>
+    <header class="header">
+        <img src="./images/Screenshot 2024-07-12 063647.png" class="logo"></img>
+        <h1 class="welcome" id="welcome"></h1>
+        <div class="menu">
+            <a href="homePage.html">Home</a>
+            <a href="allFlats.html">All Flats</a>
+            <a href="newFlat.html">New Flat</a>
+            <a href="profileUpdate.html">Profile</a>
+        </div>
+        <button class="logOutBtn" id="logOutBtn">Log Out</button>
+    </header>
+
+    <!-- allFlats.html
+     name 
+     city
+     streetName
+     streetNumber
+     areaSize
+     hasAC
+     yearBuilt
+     rentPrice
+     dateAvailable
+     
+     un buton de comutare pentru a marca sau demarca apartamentul ca favorit-->
+
+
+     <form class="filter" id="filter"> 
+        <label for="city">Filter by City:</label>
+        <select id="city" name="city">
+        </select>
+  
+        <label for="price_range_min">Filter by Price Range:</label>
+        <input type="number" id="priceRangeMin" name="price_range_min" placeholder="Min Price">
+        <input type="number" id="priceRangeMax" name="price_range_max" placeholder="Max Price">
+  
+        <label for="area_size_range_min">Filter by Area Size Range:</label>
+        <input type="number" id="areaSizeRangeMin" name="area_size_range_min" placeholder="Min Area Size">
+        <input type="number" id="areaSizeRangeMax" name="area_size_range_max" placeholder="Max Area Size">
+
+        <button type="submit" id="filterBtn">Search</button>
+    </form>
+
+    <form class="sort" id="sort">
+        <label for="sort_by">Sort by:</label>
+        <select id="sortBy" name="sort_by">
+           <option value="city_asc">City (A-Z)</option>
+           <option value="city_desc">City (Z-A)</option>
+           <option value="price_asc">Price (Low to High)</option>
+           <option value="price_desc">Price (High to Low)</option>
+           <option value="area_size_asc">Area Size (Small to Large)</option>
+           <option value="area_size_desc">Area Size (Large to Small)</option>
+        </select>
     
+        <button type="submit" id="sortBtn">Search</button>
+    </form>
+
+    <h1 class="allFlatsTitle" id="allFlatsTitle">All Flats</h1>
+
+    <table class="allFlatsTable" id="allFlatsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>Street name</th>
+                <th>Street number</th>
+                <th>Area size</th>
+                <th>Has AC</th>
+                <th>Year built</th>
+                <th>Rent price</th>
+                <th>Date available</th>
+                <th>Favorite</th>
+                <button class="toggleFavorite" id="toggleFavorite"></button>
+            </tr>
+        </thead>
+        <tbody id="tableBody" class="tableBody">
+<!-- se adauga continut -->
+        </tbody>
+    </table>
+
 </body>
 </html>

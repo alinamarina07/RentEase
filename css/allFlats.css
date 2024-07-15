@@ -152,24 +152,40 @@ body{
     color: #000000;
 }
 
-.homeTable{
+.allFlatsTitle{
+    margin-left: 680px;
+    text-transform: uppercase;
+    text-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+    margin-top: 70px;
+    color: #2676C5;
+    font-weight: 600;
+    font-size: 36px;
+    width: 380px;
+}
+
+.allFlatsTable{
     margin-left: 250px;
-    margin-top: 50px;
+    margin-top: 20px;
     width: 1000px;
     border-collapse: collapse;
     text-align: center;
     background-color: #2676C5;
 }
 
-.homeTable th, .homeTable td{
+.allFlatsTable th, .allFlatsTable td{
     border: 1px solid #000000;
     padding: 8px;
     color: #ffffff;
 }
 
-.homeTable th{
+.allFlatsTable th{
     background-color: #3399FE;
-    color: #ffffff;
     border: 1px solid #000000;
+    color: #ffffff;
 }
 
+.tableBody{
+    text-align: center;
+    background-color: #ed4141;
+    color: #000000;
+}
