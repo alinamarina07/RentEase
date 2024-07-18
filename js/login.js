@@ -6,7 +6,11 @@ const passwordError = document.getElementById('passwordError');
 const loginBtn = document.getElementById('loginBtn');
 const registerLink = document.getElementById('registerLink');
 
-let arrayofusers = JSON.parse(localStorage.getItem('arrayofusers')) || [];
+window.onload = () => {
+    preventBack();
+};
+
+let usersDB = JSON.parse(localStorage.getItem('usersDB')) || [];
 
 loginBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -14,9 +18,8 @@ loginBtn.addEventListener('click', (e) => {
 
 });
 
-
 function loginUser() {
-    const verificationUser = arrayofusers.find(
+    const verificationUser = usersDB.find(
         (user) => user.email === email.value.trim() && user.password === password.value.trim()
     );
 
@@ -29,3 +32,6 @@ function loginUser() {
     }
 }
 
+
+
+import { preventBack } from './modules/auth.js'

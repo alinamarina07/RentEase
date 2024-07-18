@@ -52,18 +52,24 @@
 
 
 <table class="homeTable" id="homeTable">
-    <tr>
-        <th>Name</th>
-        <th>City</th>
-        <th>Street name</th>
-        <th>Street number</th>
-        <th>Area size</th>
-        <th>Has AC</th>
-        <th>Year built</th>
-        <th>Rent price</th>
-        <th>Date available</th>
-        <th>Remove</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Street name</th>
+            <th>Street number</th>
+            <th>Area size</th>
+            <th>Has AC</th>
+            <th>Year built</th>
+            <th>Rent price</th>
+            <th>Date available</th>
+            <th>Remove</th>
+            <button class="remove" data-id="${flat.Id}" id="removeBtn"><i class="fas fa-trash"></i></button>
+        </tr>
+    </thead>
+    <tbody id="tBody" class="tBody">
+<!-- se adauga continut -->
+    </tbody>
 </table>
 
 </body>

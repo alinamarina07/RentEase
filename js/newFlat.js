@@ -10,6 +10,13 @@ const rentPrice = document.getElementById('rentPrice');
 const dateAvailable = document.getElementById('dateAvailable');
 const saveBtn = document.getElementById('saveBtn');
 
+window.onload = () => {
+    handleSession();
+    // preventFalseLogout();
+};
+
+let usersDB = getDB('usersDB');
+
 function validateForm() {
     let isValid = true;
     let errorMessages = [];
@@ -62,35 +69,42 @@ function validateForm() {
 }
 
 // let flatsDB = JSON.parse(localStorage.getItem('flatsDB')) || [];
+let flatsDB = getDB('flatsDB');
 
-
-// saveBtn.addEventListener('click', (e) => {
-//     e.preventDefault();
+saveBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    validateForm();
     
-//     const flats = {
-//         nameNewFlat: nameNewFlat.value,
-//         city: city.value,
-//         streetName: streetName.value,
-//         streetNumber: streetNumber.value,
-//         areaSize: areaSize.value,
-//         hasAC: hasAC.checked,
-//         yearBuilt: yearBuilt.value,
-//         rentPrice: rentPrice.value,
-//         dateAvailable: dateAvailable.value
-//         };
+    const flats = {
+        Id : uid(),
+        nameNewFlat: nameNewFlat.value,
+        city: city.value,
+        streetName: streetName.value,
+        streetNumber: streetNumber.value,
+        areaSize: areaSize.value,
+        hasAC: hasAC.checked,
+        yearBuilt: yearBuilt.value,
+        rentPrice: rentPrice.value,
+        dateAvailable: dateAvailable.value,
+        // createdBy: getUser().email,
+        };
 
-//     flatsDB.push(flats);
-//     localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
-//     alert('Flat added successfully');
-//     nameNewFlat.value = '';
-//     city.value = '';
-//     streetName.value = '';
-//     streetNumber.value = '';
-//     areaSize.value = '';
-//     hasAC.checked = false;
-//     yearBuilt.value = '';
-//     rentPrice.value = '';
-//     dateAvailable.value = '';
+    flatsDB.push(flats);
+    localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
+    alert('Flat added successfully');
+    nameNewFlat.value = '';
+    city.value = '';
+    streetName.value = '';
+    streetNumber.value = '';
+    areaSize.value = '';
+    hasAC.checked = false;
+    yearBuilt.value = '';
+    rentPrice.value = '';
+    dateAvailable.value = '';
 
-//     window.location.href = 'allFlats.html';
-// });
+    window.location.href = 'allFlats.html';
+});
+
+import { getDB, getUser } from "./modules/fetch.js";
+import {uid} from "./modules/id.js";
+import {preventFalseLogout, handleSession} from "./modules/auth.js"
