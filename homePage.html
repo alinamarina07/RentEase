@@ -23,9 +23,6 @@
     <form class="filter" id="filter"> 
         <label for="city">Filter by City:</label>
         <select id="city" name="city">
-          <!-- <option value="new_york">New York</option>
-          <option value="los_angeles">Los Angeles</option>
-          <option value="chicago">Chicago</option> -->
         </select>
   
         <label for="price_range_min">Filter by Price Range:</label>
@@ -55,18 +52,24 @@
 
 
 <table class="homeTable" id="homeTable">
-    <tr>
-        <th>Name</th>
-        <th>City</th>
-        <th>Street name</th>
-        <th>Street number</th>
-        <th>Area size</th>
-        <th>Has AC</th>
-        <th>Year built</th>
-        <th>Rent price</th>
-        <th>Date available</th>
-        <th>Remove</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Street name</th>
+            <th>Street number</th>
+            <th>Area size</th>
+            <th>Has AC</th>
+            <th>Year built</th>
+            <th>Rent price</th>
+            <th>Date available</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+
+    <tbody id="tBody" class="tBody">
+    </tbody>
+    
 </table>
 
 </body>

@@ -14,7 +14,11 @@ const confirmPasswordError = document.getElementById('confirmPasswordError');
 const registerBtn = document.getElementById('registerBtn');
 const loginLink = document.getElementById('loginLink');
 
-let arrayofusers = JSON.parse(localStorage.getItem('arrayofusers')) || [];
+window.onload = () => {
+    preventBack();
+}
+
+let usersDB = getDB('usersDB');
 
 registerBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -105,10 +109,8 @@ registerBtn.addEventListener('click', (e) => {
         isValid = false;
     };
 
+   registerUser();
 
-    if (isValid) {
-        registerUser();
-    }
 
 });
 
@@ -120,10 +122,11 @@ function registerUser() {
         dateOfBirth: dateOfBirth.value.trim(),
         password: password.value.trim()
     };
-    arrayofusers.push(user);
-    localStorage.setItem('arrayofusers', JSON.stringify(arrayofusers));
+    usersDB.push(user);
+    localStorage.setItem('usersDB', JSON.stringify(usersDB));
     alert('User registered successfully');
     window.location.href = 'login.html';
     }
 
-
+import { preventBack } from "./modules/auth.js";
+import { getDB } from "./modules/fetch.js";

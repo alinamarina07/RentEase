@@ -8,9 +8,21 @@
     <script type="module" src="./js/newFlat.js" defer></script>
 </head>
 <body>
+    <header class="header">
+        <img src="./images/Screenshot 2024-07-12 063647.png" class="logo"></img>
+        <h1 class="welcome" id="welcome"></h1>
+        <div class="menu">
+            <a href="homePage.html">Home</a>
+            <a href="allFlats.html">All Flats</a>
+            <a href="newFlat.html">New Flat</a>
+            <a href="profileUpdate.html">Profile</a>
+        </div>
+        <button class="logOutBtn" id="logOutBtn">Log Out</button>
+    </header>
+
     <form class="newFlatForm" id="newFlatForm">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="nameNewFlat" name="name">
 
         <label for="city">City:</label>
         <input type="text" id="city" name="city">
@@ -36,7 +48,7 @@
         <label for="dateAvailable">Date available:</label>
         <input type="date" id="dateAvailable" name="dateAvailable">
 
-        <button type="submit" id="saveBtn" onclick="saveFlatDetails()">Save</button>
+        <button type="submit" id="saveBtn">Save</button>
 
     </form>
 
