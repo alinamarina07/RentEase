@@ -47,7 +47,7 @@
            <option value="area_size_desc">Area Size (Large to Small)</option>
         </select>
     
-        <button type="submit">Search</button>
+        <button type="submit" id="sortBtn">Search</button>
   </form>
 
 
@@ -64,7 +64,7 @@
             <th>Rent price</th>
             <th>Date available</th>
             <th>Remove</th>
-            <button class="remove" data-id="${flat.Id}" id="removeBtn"><i class="fas fa-trash"></i></button>
+            <button class="removeFavoriteBtn" data-id="${flat.Id}" id="removeBtn"><i class="fas fa-trash"></i></button>
         </tr>
     </thead>
     <tbody id="tBody" class="tBody">

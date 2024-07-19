@@ -11,22 +11,14 @@ const tBody = document.getElementById('tBody');
 const logOutBtn = document.getElementById('logOutBtn');
 const welcome = document.getElementById('welcome');
 
-function displayUserName() {
-    const user = getUser();
-    if (user) {
-        welcome.textContent = `Welcome, ${user.email}`;
-    }
-}
-
 window.onload = () => {
     handleSession();
     // preventFalseLogout();
-    displayUserName();
     populateCityFilter();
     loadFlats();
 };
 
-let {firstName, lastName, email, password} = JSON.parse(localStorage.getItem('currentUser'));
+let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
 welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
 
 function populateCityFilter() {
@@ -40,10 +32,9 @@ function populateCityFilter() {
     });
 }
 
-// Încarcă toate apartamentele în tabel
 function loadFlats() {
     const flatsDB = getDB('flatsDB');
-    tBody.innerHTML = ''; // Curăță tabelul existent
+    tBody.innerHTML = '';
     
     flatsDB.forEach(flat => {
         const row = document.createElement('tr');
@@ -59,26 +50,37 @@ function loadFlats() {
             <td>${flat.rentPrice}</td>
             <td>${flat.dateAvailable}</td>
             <td><button class="favoriteBtn" data-id="${flat.Id}">${flat.isFavorite ? '❤️' : '♡'}</button></td>
-        `;
+            <td><button class="removeBtn" data-id="${flat.Id}">🗑️</button></td>
+            `;
 
         tBody.appendChild(row);
     });
 
-    // Adaugă event listeners pentru butoanele de favorite
     document.querySelectorAll('.favoriteBtn').forEach(btn => {
         btn.addEventListener('click', toggleFavorite);
     });
-}
+
+    document.querySelectorAll('.removeBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            removeItemById(btn.getAttribute('data-id'));
+        });
+    });
+    
+    const removeItemById = (id) => {
+        const flatsDB = getDB('flatsDB');
+        const updatedFlatsDB = flatsDB.filter(flat => flat.Id !== id);
+        localStorage.setItem('flatsDB', JSON.stringify(updatedFlatsDB));
+        loadFlats();
+    }};
 
 function applyFiltersAndSorting() {
     let flatsDB = getDB('flatsDB');
 
-    // Filtrare
     const city = cityFilter.value;
     const minPrice = parseFloat(priceRangeMin.value) || 0;
     const maxPrice = parseFloat(priceRangeMax.value) || Infinity;
     const minAreaSize = parseFloat(areaSizeRangeMin.value) || 0;
-    const maxAreaSize = parseFloat(areaSizeRangeRangeMax.value) || Infinity;
+    const maxAreaSize = parseFloat(areaSizeRangeMax.value) || Infinity;
 
     flatsDB = flatsDB.filter(flat => 
         (city === '' || flat.city === city) &&
@@ -88,7 +90,6 @@ function applyFiltersAndSorting() {
         flat.areaSize <= maxAreaSize
     );
 
-    // Sortare
     const sortOption = sortBy.value;
     switch (sortOption) {
         case 'city_asc':
@@ -111,7 +112,7 @@ function applyFiltersAndSorting() {
             break;
     }
 
-    tBody.innerHTML = ''; // Curăță tabelul existent
+    tBody.innerHTML = '';
     flatsDB.forEach(flat => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -125,51 +126,54 @@ function applyFiltersAndSorting() {
             <td>${flat.rentPrice}</td>
             <td>${flat.dateAvailable}</td>
             <td><button class="favoriteBtn" data-id="${flat.Id}">${flat.isFavorite ? '❤️' : '♡'}</button></td>
-        `;
+            <td><button class="removeBtn" data-id="${flat.Id}">🗑️</button></td>
+            `;
         tBody.appendChild(row);
     });
 
-    // Adaugă event listeners pentru butoanele de favorite
     document.querySelectorAll('.favoriteBtn').forEach(btn => {
         btn.addEventListener('click', toggleFavorite);
     });
-}
 
-// Comută starea de favorit a unui apartament
+    document.querySelectorAll('.removeBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            removeItemById(btn.getAttribute('data-id'));
+        });
+    });
+}
 function toggleFavorite(event) {
     const button = event.target;
     const flatId = button.getAttribute('data-id');
     let flatsDB = getDB('flatsDB');
+    let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
 
     flatsDB = flatsDB.map(flat => {
         if (flat.Id === flatId) {
             flat.isFavorite = !flat.isFavorite;
+
+            if (flat.isFavorite) {
+                favoriteFlatsDB.push(flat);
+            } else {
+                favoriteFlatsDB = favoriteFlatsDB.filter(flat => flat.Id !== flatId);
+            }
         }
         return flat;
     });
 
     localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
     loadFlats();
-}
+    localStorage.setItem('favoriteFlatsDB', JSON.stringify(favoriteFlatsDB));
+};
 
-// Event listener pentru butonul de filtrare
 filterBtn.addEventListener('click', (event) => {
     event.preventDefault();
     applyFiltersAndSorting();
 });
 
-// Event listener pentru butonul de sortare
 sortBtn.addEventListener('click', (event) => {
     event.preventDefault();
     applyFiltersAndSorting();
 });
-
-// Event listener pentru butonul de logare
-// logOutBtn.addEventListener('click', () => {
-//     // Presupunând că `handleLogout` este o funcție care se ocupă de deconectare
-//     handleLogout();
-//     window.location.href = 'homePage.html';
-// });
 
 logOutBtn.addEventListener('click', logOut);
 

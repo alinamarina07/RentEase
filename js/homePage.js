@@ -15,22 +15,27 @@ const tBody = document.getElementById('tBody');
 const removeBtn = document.getElementById('removeBtn');
 const homeTable = document.getElementById('homeTable');
 
+// window.onload = () => {
+//     handleSession();
+//     // preventFalseLogout();
+//     displayUserName();
+//     populateCityFilter();
+//     loadFlats();
+// };
+
+
 window.onload = () => {
+    loadFavoriteFlats();
+    populateCityFilter();
     handleSession();
     // preventFalseLogout();
     displayUserName();
-    populateCityFilter();
-    loadFlats();
+    loadFavoriteFlats();
+
 };
-
-let {firstName, lastName, email, password} = JSON.parse(localStorage.getItem('currentUser'));
-welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
-
 function displayUserName() {
-    const user = getUser();
-    if (user) {
-        welcome.textContent = `Welcome, ${user.email}`;
-    }
+let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
+welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
 }
 
 function populateCityFilter() {
@@ -44,11 +49,11 @@ function populateCityFilter() {
     });
 }
 
-function loadFlats() {
-    const flatsDB = getDB('flatsDB');
+function loadFavoriteFlats() {
+    const favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
     tBody.innerHTML = '';
-    
-    flatsDB.forEach(flat => {
+
+    favoriteFlatsDB.forEach(flat => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${flat.nameNewFlat}</td>
@@ -60,24 +65,34 @@ function loadFlats() {
             <td>${flat.yearBuilt}</td>
             <td>${flat.rentPrice}</td>
             <td>${flat.dateAvailable}</td>
-            <td><button class="removeBtn" data-id="${flat.Id}">🗑️</button></td>
+            <td><button class="removeFavoriteBtn" data-id="${flat.Id}">🗑️</button></td>
         `;
         tBody.appendChild(row);
-
     });
 
-document.querySelectorAll('.removeBtn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        removeItemById(btn.getAttribute('data-id'));
+    document.querySelectorAll('.removeFavoriteBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            removeFavoriteItemById(btn.getAttribute('data-id'));
+        });
     });
-});
+}
 
-const removeItemById = (id) => {
-    const flatsDB = getDB('flatsDB');
-    const updatedFlatsDB = flatsDB.filter(flat => flat.Id !== id);
-    localStorage.setItem('flatsDB', JSON.stringify(updatedFlatsDB));
-    loadFlats();
-}};
+function removeFavoriteItemById(id) {
+    let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
+    let flatsDB = getDB('flatsDB');
+
+    favoriteFlatsDB = favoriteFlatsDB.filter(flat => flat.Id !== id);
+    flatsDB = flatsDB.map(flat => {
+        if (flat.Id === id) {
+            flat.isFavorite = false;
+        }
+        return flat;
+    });
+
+    localStorage.setItem('favoriteFlatsDB', JSON.stringify(favoriteFlatsDB));
+    localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
+    loadFavoriteFlats();
+}
 
 function applyFiltersAndSorting() {
     let flatsDB = getDB('flatsDB');
@@ -116,9 +131,13 @@ function applyFiltersAndSorting() {
         case 'area_size_desc':
             flatsDB.sort((a, b) => b.areaSize - a.areaSize);
             break;
-    }
+    }   
+    displayFilteredFlats(flatsDB);
+}
 
+function displayFilteredFlats(flatsDB) {
     tBody.innerHTML = '';
+
     flatsDB.forEach(flat => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -131,28 +150,20 @@ function applyFiltersAndSorting() {
             <td>${flat.yearBuilt}</td>
             <td>${flat.rentPrice}</td>
             <td>${flat.dateAvailable}</td>
-            <td><button class="removeBtn" data-id="${flat.Id}">🗑️</button></td>
+            <td><button class="removeFavoriteBtn" data-id="${flat.Id}">🗑️</button></td>
         `;
         tBody.appendChild(row);
     });
 
-        document.querySelectorAll('.removeBtn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                removeItemById(btn.getAttribute('data-id'));
-            });
+    document.querySelectorAll('.favoriteBtn').forEach(btn => {
+        btn.addEventListener('click', toggleFavorite);
+    });
+
+    document.querySelectorAll('.removeBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            removeItemById(btn.getAttribute('data-id'));
         });
-
-}
-
-function removeFlat(event) {
-    const button = event.target;
-    const flatId = button.getAttribute('data-id');
-    let flatsDB = getDB('flatsDB');
-
-    flatsDB = flatsDB.filter(flat => flat.Id !== flatId);
-
-    localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
-    loadFlats();
+    });
 }
 
 filterBtn.addEventListener('click', (event) => {
@@ -160,13 +171,12 @@ filterBtn.addEventListener('click', (event) => {
     applyFiltersAndSorting();
 });
 
-document.querySelector('.sort button').addEventListener('click', (event) => {
+sortBtn.addEventListener('click', (event) => {
     event.preventDefault();
     applyFiltersAndSorting();
 });
 
 logOutBtn.addEventListener('click', logOut);
-
 
 import { getDB, getUser } from "./modules/fetch.js";
 import { handleSession, preventFalseLogout, logOut } from "./modules/auth.js";

@@ -9,11 +9,22 @@ const yearBuilt = document.getElementById('yearBuilt');
 const rentPrice = document.getElementById('rentPrice');
 const dateAvailable = document.getElementById('dateAvailable');
 const saveBtn = document.getElementById('saveBtn');
+const logOutBtn = document.getElementById('logOutBtn');
 
 window.onload = () => {
     handleSession();
     // preventFalseLogout();
 };
+
+function displayUserName() {
+    const user = getUser();
+    if (user) {
+        welcome.textContent = `Welcome, ${user.email}!`;
+    }
+}
+
+let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
+welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
 
 let usersDB = getDB('usersDB');
 
@@ -73,8 +84,8 @@ let flatsDB = getDB('flatsDB');
 
 saveBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    validateForm();
-    
+
+    if (validateForm()){
     const flats = {
         Id : uid(),
         nameNewFlat: nameNewFlat.value,
@@ -103,8 +114,13 @@ saveBtn.addEventListener('click', (e) => {
     dateAvailable.value = '';
 
     window.location.href = 'allFlats.html';
+}
+
 });
+
+
+logOutBtn.addEventListener('click', logOut);
 
 import { getDB, getUser } from "./modules/fetch.js";
 import {uid} from "./modules/id.js";
-import {preventFalseLogout, handleSession} from "./modules/auth.js"
+import {preventFalseLogout, handleSession, logOut} from "./modules/auth.js"
