@@ -14,17 +14,13 @@ const logOutBtn = document.getElementById('logOutBtn');
 window.onload = () => {
     handleSession();
     // preventFalseLogout();
+    displayUserName();
 };
 
 function displayUserName() {
-    const user = getUser();
-    if (user) {
-        welcome.textContent = `Welcome, ${user.email}!`;
-    }
+    let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
+    welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
 }
-
-let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
-welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
 
 let usersDB = getDB('usersDB');
 

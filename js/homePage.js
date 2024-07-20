@@ -15,15 +15,6 @@ const tBody = document.getElementById('tBody');
 const removeBtn = document.getElementById('removeBtn');
 const homeTable = document.getElementById('homeTable');
 
-// window.onload = () => {
-//     handleSession();
-//     // preventFalseLogout();
-//     displayUserName();
-//     populateCityFilter();
-//     loadFlats();
-// };
-
-
 window.onload = () => {
     loadFavoriteFlats();
     populateCityFilter();

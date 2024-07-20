@@ -31,7 +31,8 @@ body{
     font-weight: 700;
     text-align: center;
     color: #0e4e8f;
-    margin-top: 25px;
+    margin-top: 28px;
+    text-transform: uppercase;
 }
 
 .registerForm{

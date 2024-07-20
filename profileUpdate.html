@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Update</title>
+    <link rel="stylesheet" href="./css/profileUpdate.css">
+    <script type="module" src="./js/profileUpdate.js" defer></script>
 </head>
 <body>
-    
+    <section class="container">
+        <h1 class="profileUpdateTitle">Profile Update</h1>
+            <form class="profileUpdateForm" id="profileUpdateForm">
+                <input type="text" placeholder="First name" id="firstName">
+                <span class="error" id="firstNameError"></span>
+                <input type="text" placeholder="Last name" id="lastName">
+                <span class="error" id="lastNameError"></span>
+                <input type="email" placeholder="Email address" id="email">
+                <span class="error" id="emailError"></span>
+                <input type="date" placeholder="Date of birth" id="dateOfBirth">
+                <span class="error" id="dateOfBirthError"></span>
+                <input type="password" placeholder="Password" id="password">
+                <span class="error" id="passwordError"></span>
+                <input type="password" placeholder="Password confirmation" id="confirmPassword">
+                <span class="error" id="confirmPasswordError"></span>
+                <button class="profileUpdateBtn" id="profileUpdateBtn">Update</button>
+            </form>
+    </section>
 </body>
 </html>

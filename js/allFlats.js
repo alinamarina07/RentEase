@@ -16,10 +16,13 @@ window.onload = () => {
     // preventFalseLogout();
     populateCityFilter();
     loadFlats();
+    displayUserName();
 };
 
-let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
-welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
+function displayUserName(){
+    let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
+    welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
+}
 
 function populateCityFilter() {
     const flatsDB = getDB('flatsDB');
