@@ -118,3 +118,42 @@ body{
     background-repeat: no-repeat;
     background-image: url("../images/fatade_04.jpg");
 }
+
+@media (max-width: 375px) {
+    .container {
+        height: 550px;
+        width: 80%;
+        padding-right: 20px;
+        box-shadow: none;
+    }
+
+    .registerForm {
+        width: 100%;
+        margin: 10px;
+    }
+
+    .registerForm input, .registerBtn {
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .registerTitle {
+        font-size: 22px;
+        margin-top: 20px;
+    }
+
+    .img {
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .registerQuestion{
+        margin-top: 480px;
+        margin-left: 70px;
+    }
+
+    .loginLink{
+        margin-top: 510px;
+        margin-left: 92px;
+    }
+}

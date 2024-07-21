@@ -146,15 +146,18 @@ body{
 
 @media only screen and (max-width: 375px) {
     .header {
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
+        width: 100%;
+        height: 70px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .logo {
         width: 70px;
         height: 50px;
-        margin-left: 0;
+        margin-left: 3px;
     }
 
     .welcome {
@@ -163,22 +166,58 @@ body{
         text-align: center;
     }
 
-    .menu {
+    .hamburger-menu {
+        cursor:pointer;
+        display:flex;
         flex-direction: column;
-        gap: 10px;
+        justify-content: center;
+        gap:2px;
+        width:25px;
     }
 
-    .menu a {
-        width: auto;
-        font-size: 14px;
-        padding: 5px;
+    .hamburger-menu span {
+        height:5px;
+        width: 25px;
+        background-color: rgb(0, 0, 0);
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .menu.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2px;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #2676C5;
+        opacity: 0.9;
+        z-index: 1;
+    }
+
+    .menu a{
+        text-decoration: none;
+        color:black;
+        font-size: 16px;
+        gap: 5px;
+        margin: 0;
+        padding: 0;
+        border-radius: 5px;
+        width: 50%;
+        box-shadow: none;
+        text-align: center;
     }
 
     .logOutBtn {
-        font-size: 14px;
+        font-size: 11px;
         width: auto;
         padding: 5px;
-        margin-right: 0;
+        margin-right: 3px;
     }
 
     .newFlatForm input, .newFlatForm button {
