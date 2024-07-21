@@ -117,6 +117,7 @@ saveBtn.addEventListener('click', (e) => {
 
 logOutBtn.addEventListener('click', logOut);
 
+
 import { getDB, getUser } from "./modules/fetch.js";
 import {uid} from "./modules/id.js";
 import {preventFalseLogout, handleSession, logOut} from "./modules/auth.js"

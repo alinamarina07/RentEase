@@ -189,3 +189,78 @@ body{
     background-color: #ed4141;
     color: #000000;
 }
+
+@media only screen and (max-width: 375px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo {
+        width: 70px;
+        height: 50px;
+        margin-left: 0;
+    }
+
+    .welcome {
+        font-size: 15px;
+        width: auto;
+        text-align: center;
+    }
+
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu a {
+        width: auto;
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .logOutBtn {
+        font-size: 14px;
+        width: auto;
+        padding: 5px;
+        margin-right: 0;
+    }
+
+    .filter, .sort {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 10px;
+    }
+
+    .filter label, .sort label {
+        font-size: 14px;
+    }
+
+    .filter input, .filter select, .sort select, .filter button, .sort button {
+        width: 90%;
+        margin: 5px 0;
+    }
+
+    .filter button, .sort button {
+        width: auto;
+    }
+
+    .allFlatsTitle {
+        font-size: 24px;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .allFlatsTable {
+        width: 100%;
+        margin: 10px 0;
+        font-size: 12px;
+    }
+
+    .allFlatsTable th, .allFlatsTable td {
+        padding: 4px;
+    }
+}
+
+/* nu e terminal */
