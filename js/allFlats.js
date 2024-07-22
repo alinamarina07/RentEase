@@ -36,8 +36,12 @@ function populateCityFilter() {
 }
 
 function loadFlats() {
-    const flatsDB = getDB('flatsDB');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let flatsDB = getDB('flatsDB');
     tBody.innerHTML = '';
+    
+    flatsDB = flatsDB.filter(flat => flat.createdBy === currentUser.email);
+        
     
     flatsDB.forEach(flat => {
         const row = document.createElement('tr');
@@ -70,14 +74,18 @@ function loadFlats() {
     });
     
     const removeItemById = (id) => {
-        const flatsDB = getDB('flatsDB');
-        const updatedFlatsDB = flatsDB.filter(flat => flat.Id !== id);
-        localStorage.setItem('flatsDB', JSON.stringify(updatedFlatsDB));
+        let flatsDB = getDB('flatsDB');
+        flatsDB = flatsDB.filter(flat => flat.Id !== id);
+        // const updatedFlatsDB = flatsDB.filter(flat => flat.Id !== id);
+        localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
         loadFlats();
     }};
 
 function applyFiltersAndSorting() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let flatsDB = getDB('flatsDB');
+
+    flatsDB = flatsDB.filter(flat => flat.createdBy === currentUser.email);
 
     const city = cityFilter.value;
     const minPrice = parseFloat(priceRangeMin.value) || 0;
@@ -147,26 +155,33 @@ function applyFiltersAndSorting() {
 function toggleFavorite(event) {
     const button = event.target;
     const flatId = button.getAttribute('data-id');
+    // let flatsDB = getDB('flatsDB');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUserId = currentUser ? currentUser.Id : null;
+
+    if (!currentUserId) return;
+
     let flatsDB = getDB('flatsDB');
     let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
 
     flatsDB = flatsDB.map(flat => {
-        if (flat.Id === flatId) {
+        if (flat.Id === flatId && flat.userId === currentUserId) {
             flat.isFavorite = !flat.isFavorite;
 
             if (flat.isFavorite) {
-                favoriteFlatsDB.push(flat);
+                if (!favoriteFlatsDB.find(favFlat => favFlat.Id === flatId)) {
+                      favoriteFlatsDB.push(flat);}
             } else {
-                favoriteFlatsDB = favoriteFlatsDB.filter(flat => flat.Id !== flatId);
+                favoriteFlatsDB = favoriteFlatsDB.filter(favFlat => favFlat.Id !== flatId);
             }
         }
         return flat;
     });
 
     localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
-    loadFlats();
     localStorage.setItem('favoriteFlatsDB', JSON.stringify(favoriteFlatsDB));
-};
+    loadFavoriteFlats();
+}
 
 filterBtn.addEventListener('click', (event) => {
     event.preventDefault();
