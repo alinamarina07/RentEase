@@ -41,13 +41,8 @@ function populateCityFilter() {
 }
 
 function loadFavoriteFlats() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentUserId = currentUser ? currentUser.Id : null;
-
-    if (!currentUserId) return;
-
-    const favoriteFlatsDB = getDB('favoriteFlatsDB').filter(flat => flat.userId === currentUserId);
-    // const favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
+    const favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
+        
     tBody.innerHTML = '';
 
     favoriteFlatsDB.forEach(flat => {
@@ -75,19 +70,12 @@ function loadFavoriteFlats() {
 }
 
 function removeFavoriteItemById(id) {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentUserId = currentUser ? currentUser.Id : null;
-
-    if (!currentUserId) return;
-
-    let favoriteFlatsDB = getDB('favoriteFlatsDB').filter(flat => flat.userId === currentUserId);
+    let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
     let flatsDB = getDB('flatsDB');
-    // let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
-    // let flatsDB = getDB('flatsDB');
 
     favoriteFlatsDB = favoriteFlatsDB.filter(flat => flat.Id !== id);
     flatsDB = flatsDB.map(flat => {
-        if (flat.Id === id && flat.userId === currentUserId) {
+        if (flat.Id === id) {
             flat.isFavorite = false;
         }
         return flat;

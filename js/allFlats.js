@@ -13,14 +13,13 @@ const welcome = document.getElementById('welcome');
 
 window.onload = () => {
     handleSession();
-    // preventFalseLogout();
     populateCityFilter();
     loadFlats();
     displayUserName();
 };
 
-function displayUserName(){
-    let {firstName, lastName} = JSON.parse(localStorage.getItem('currentUser'));
+function displayUserName() {
+    let { firstName, lastName } = JSON.parse(localStorage.getItem('currentUser'));
     welcome.textContent = `Welcome, ${firstName} ${lastName}!`;
 }
 
@@ -41,8 +40,7 @@ function loadFlats() {
     tBody.innerHTML = '';
     
     flatsDB = flatsDB.filter(flat => flat.createdBy === currentUser.email);
-        
-    
+
     flatsDB.forEach(flat => {
         const row = document.createElement('tr');
         
@@ -58,7 +56,7 @@ function loadFlats() {
             <td>${flat.dateAvailable}</td>
             <td><button class="favoriteBtn" data-id="${flat.Id}">${flat.isFavorite ? '❤️' : '♡'}</button></td>
             <td><button class="removeBtn" data-id="${flat.Id}">🗑️</button></td>
-            `;
+        `;
 
         tBody.appendChild(row);
     });
@@ -72,60 +70,54 @@ function loadFlats() {
             removeItemById(btn.getAttribute('data-id'));
         });
     });
-    
+
     const removeItemById = (id) => {
         let flatsDB = getDB('flatsDB');
         flatsDB = flatsDB.filter(flat => flat.Id !== id);
-        // const updatedFlatsDB = flatsDB.filter(flat => flat.Id !== id);
         localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
         loadFlats();
-    }};
+    }
+}
 
 function applyFiltersAndSorting() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let flatsDB = getDB('flatsDB');
-
+    
     flatsDB = flatsDB.filter(flat => flat.createdBy === currentUser.email);
-
+    
     const city = cityFilter.value;
     const minPrice = parseFloat(priceRangeMin.value) || 0;
-    const maxPrice = parseFloat(priceRangeMax.value) || Infinity;
-    const minAreaSize = parseFloat(areaSizeRangeMin.value) || 0;
-    const maxAreaSize = parseFloat(areaSizeRangeMax.value) || Infinity;
+    const maxPrice = parseFloat(priceRangeMax.value) || Number.MAX_VALUE;
+    const minArea = parseFloat(areaSizeRangeMin.value) || 0;
+    const maxArea = parseFloat(areaSizeRangeMax.value) || Number.MAX_VALUE;
 
-    flatsDB = flatsDB.filter(flat => 
-        (city === '' || flat.city === city) &&
-        flat.rentPrice >= minPrice && 
-        flat.rentPrice <= maxPrice &&
-        flat.areaSize >= minAreaSize &&
-        flat.areaSize <= maxAreaSize
-    );
+    flatsDB = flatsDB.filter(flat => flat.city.includes(city));
+    flatsDB = flatsDB.filter(flat => flat.rentPrice >= minPrice && flat.rentPrice <= maxPrice);
+    flatsDB = flatsDB.filter(flat => flat.areaSize >= minArea && flat.areaSize <= maxArea);
 
-    const sortOption = sortBy.value;
-    switch (sortOption) {
-        case 'city_asc':
-            flatsDB.sort((a, b) => a.city.localeCompare(b.city));
-            break;
-        case 'city_desc':
-            flatsDB.sort((a, b) => b.city.localeCompare(a.city));
-            break;
+    const sortOrder = sortBy.value;
+    switch (sortOrder) {
         case 'price_asc':
             flatsDB.sort((a, b) => a.rentPrice - b.rentPrice);
             break;
         case 'price_desc':
             flatsDB.sort((a, b) => b.rentPrice - a.rentPrice);
             break;
-        case 'area_size_asc':
+        case 'area_asc':
             flatsDB.sort((a, b) => a.areaSize - b.areaSize);
             break;
-        case 'area_size_desc':
+        case 'area_desc':
             flatsDB.sort((a, b) => b.areaSize - a.areaSize);
+            break;
+        default:
             break;
     }
 
     tBody.innerHTML = '';
+
     flatsDB.forEach(flat => {
         const row = document.createElement('tr');
+        
         row.innerHTML = `
             <td>${flat.nameNewFlat}</td>
             <td>${flat.city}</td>
@@ -138,7 +130,8 @@ function applyFiltersAndSorting() {
             <td>${flat.dateAvailable}</td>
             <td><button class="favoriteBtn" data-id="${flat.Id}">${flat.isFavorite ? '❤️' : '♡'}</button></td>
             <td><button class="removeBtn" data-id="${flat.Id}">🗑️</button></td>
-            `;
+        `;
+
         tBody.appendChild(row);
     });
 
@@ -152,48 +145,46 @@ function applyFiltersAndSorting() {
         });
     });
 }
-function toggleFavorite(event) {
-    const button = event.target;
-    const flatId = button.getAttribute('data-id');
-    // let flatsDB = getDB('flatsDB');
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const currentUserId = currentUser ? currentUser.Id : null;
 
-    if (!currentUserId) return;
-
-    let flatsDB = getDB('flatsDB');
-    let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
-
-    flatsDB = flatsDB.map(flat => {
-        if (flat.Id === flatId && flat.userId === currentUserId) {
-            flat.isFavorite = !flat.isFavorite;
-
-            if (flat.isFavorite) {
-                if (!favoriteFlatsDB.find(favFlat => favFlat.Id === flatId)) {
-                      favoriteFlatsDB.push(flat);}
-            } else {
-                favoriteFlatsDB = favoriteFlatsDB.filter(favFlat => favFlat.Id !== flatId);
-            }
-        }
-        return flat;
-    });
-
-    localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
-    localStorage.setItem('favoriteFlatsDB', JSON.stringify(favoriteFlatsDB));
-    loadFavoriteFlats();
-}
-
-filterBtn.addEventListener('click', (event) => {
-    event.preventDefault();
+filterBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     applyFiltersAndSorting();
 });
 
-sortBtn.addEventListener('click', (event) => {
-    event.preventDefault();
+sortBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     applyFiltersAndSorting();
 });
 
 logOutBtn.addEventListener('click', logOut);
+
+function toggleFavorite(e) {
+    // const id = e.target.getAttribute('data-id');
+    // let flatsDB = getDB('flatsDB');
+    // const flat = flatsDB.find(f => f.Id === id);
+    // flat.isFavorite = !flat.isFavorite;
+    // localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
+    // loadFlats();
+
+    const id = e.target.getAttribute('data-id');
+    let flatsDB = getDB('flatsDB');
+    const flat = flatsDB.find(f => f.Id === id);
+    if (flat) {
+        flat.isFavorite = !flat.isFavorite;
+        if (flat.isFavorite) {
+            let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
+            favoriteFlatsDB = favoriteFlatsDB.filter(favFlat => favFlat.Id !== id); // Avoid duplicates
+            favoriteFlatsDB.push(flat);
+            localStorage.setItem('favoriteFlatsDB', JSON.stringify(favoriteFlatsDB));
+        } else {
+            let favoriteFlatsDB = getDB('favoriteFlatsDB') || [];
+            favoriteFlatsDB = favoriteFlatsDB.filter(favFlat => favFlat.Id !== id);
+            localStorage.setItem('favoriteFlatsDB', JSON.stringify(favoriteFlatsDB));
+        }
+        localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
+        loadFlats(); // Reload the flats to update the UI
+    }
+}
 
 import { handleSession, logOut, preventFalseLogout } from "./modules/auth.js";
 import { getDB, getUser } from "./modules/fetch.js";
