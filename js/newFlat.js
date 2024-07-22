@@ -76,12 +76,18 @@ function validateForm() {
 }
 
 // let flatsDB = JSON.parse(localStorage.getItem('flatsDB')) || [];
-let flatsDB = getDB('flatsDB');
+// let flatsDB = getDB('flatsDB');
 
 saveBtn.addEventListener('click', (e) => {
     e.preventDefault();
 
     if (validateForm()){
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert('User not logged in');
+            window.location.href = 'login.html';
+            return;
+        }
     const flats = {
         Id : uid(),
         nameNewFlat: nameNewFlat.value,
@@ -93,9 +99,10 @@ saveBtn.addEventListener('click', (e) => {
         yearBuilt: yearBuilt.value,
         rentPrice: rentPrice.value,
         dateAvailable: dateAvailable.value,
-        // createdBy: getUser().email,
+        createdBy: currentUser.email,
         };
 
+    let flatsDB = JSON.parse(localStorage.getItem('flatsDB')) || [];
     flatsDB.push(flats);
     localStorage.setItem('flatsDB', JSON.stringify(flatsDB));
     alert('Flat added successfully');
